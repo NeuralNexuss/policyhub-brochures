@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolicyHub — Enterprise Policy Lifecycle Management</title>
+    <meta name="description" content="End-to-end policy management platform. AI-powered compliance for modern enterprises.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0f1a;
+            --navy: #0f1729;
+            --blue: #0066ff;
+            --blue-light: #3d8bff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-400: #9ba3af;
+            --gray-600: #5a6270;
+            --white: #ffffff;
+            --accent: #00d4aa;
+
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+            --ease-in: cubic-bezier(0.4, 0, 1, 1);
+            --ease-out: cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography System */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--blue);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.25rem;
+            }
+        }
+
+        section {
+            padding: clamp(5rem, 12vh, 10rem) 0;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s var(--ease);
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            height: 32px;
+            filter: brightness(0);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--black);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue);
+            transition: width 0.3s var(--ease);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            border-radius: 6px;
+            transition: all 0.3s var(--ease);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--blue);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--black);
+            color: var(--black);
+        }
+
+        .btn-outline:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: clamp(8rem, 20vh, 12rem);
+            padding-bottom: clamp(6rem, 12vh, 8rem);
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--black) 0%, var(--navy) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: clamp(1.125rem, 2vw, 1.375rem);
+            color: var(--gray-600);
+            max-width: 700px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat {
+            opacity: 0;
+            animation: fadeInUp 0.8s var(--ease) forwards;
+        }
+
+        .stat:nth-child(1) { animation-delay: 0.1s; }
+        .stat:nth-child(2) { animation-delay: 0.2s; }
+        .stat:nth-child(3) { animation-delay: 0.3s; }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--blue);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9375rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+        }
+
+        /* Image Showcase */
+        .showcase {
+            padding: 0;
+            margin-bottom: clamp(5rem, 12vh, 10rem);
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .showcase-main {
+            grid-column: 1 / -1;
+        }
+
+        .showcase-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--gray-100);
+            box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
+            transition: all 0.5s var(--ease);
+        }
+
+        .showcase-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        .showcase-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Problem Section */
+        .problem {
+            background: var(--gray-100);
+        }
+
+        .section-header {
+            max-width: 800px;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            margin-bottom: 1rem;
+        }
+
+        .section-lead {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .pain-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transition: all 0.3s var(--ease);
+        }
+
+        .pain-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 102, 255, 0.08);
+        }
+
+        .pain-stat {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--blue);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .pain-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .pain-card p {
+            color: var(--gray-600);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .pain-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Solution Section */
+        .solution {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .solution .eyebrow {
+            color: var(--accent);
+        }
+
+        .solution h2 {
+            color: var(--white);
+        }
+
+        .solution .section-lead {
+            color: var(--gray-400);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s var(--ease);
+        }
+
+        .module:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .module-number {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0, 212, 170, 0.1);
+            border-radius: 4px;
+        }
+
+        .module h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            color: var(--white);
+        }
+
+        .module p {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .module-metric {
+            font-size: 0.8125rem;
+            color: var(--accent);
+            font-weight: 600;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        @media (max-width: 1024px) {
+            .modules-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Comparison Section */
+        .comparison {
+            background: var(--white);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 4rem;
+        }
+
+        .comparison-table thead {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .comparison-table th {
+            padding: 1.5rem 2rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .comparison-table th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+
+        .comparison-table th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+
+        .comparison-table td {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .comparison-table tbody tr:hover {
+            background: var(--gray-100);
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tbody tr:last-child td:first-child {
+            border-radius: 0 0 0 12px;
+        }
+
+        .comparison-table tbody tr:last-child td:last-child {
+            border-radius: 0 0 12px 0;
+        }
+
+        .before {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .after {
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        .improvement {
+            display: inline-block;
+            padding: 0.375rem 0.875rem;
+            background: rgba(0, 212, 170, 0.1);
+            color: var(--accent);
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8125rem;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        /* CTA Section */
+        .cta {
+            background: var(--blue);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta h2 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .cta .btn {
+            background: var(--white);
+            color: var(--blue);
+            font-size: 1.0625rem;
+            padding: 1.125rem 3rem;
+        }
+
+        .cta .btn:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--gray-400);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            max-width: 400px;
+        }
+
+        .footer-logo {
+            height: 40px;
+            margin-bottom: 1.5rem;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-tagline {
+            font-size: 1.25rem;
+            color: var(--white);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-description {
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-contact {
+            font-size: 0.9375rem;
+        }
+
+        .footer-contact a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-contact a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--blue);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+
+    <header>
+        <nav>
+            <img src="Logo_Full_white.png" alt="NeuralNexus" class="logo">
+            <ul class="nav-links">
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#results">Results</a></li>
+            </ul>
+            <a href="mailto:info@neuralnexus.lk" class="btn">Get Demo</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <p class="eyebrow">Enterprise Policy Lifecycle Management</p>
+                <h1>Policy compliance, transformed</h1>
+                <p class="hero-description">
+                    End-to-end platform for the complete policy lifecycle. From AI-powered authoring to verified comprehension and continuous compliance monitoring.
+                </p>
+
+                <div class="hero-cta">
+                    <a href="mailto:info@neuralnexus.lk" class="btn">Request Demo</a>
+                    <a href="https://wa.me/94777880390" class="btn btn-outline" target="_blank">WhatsApp Us</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">50-70%</div>
+                        <div class="stat-label">Faster policy creation</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">95%+</div>
+                        <div class="stat-label">Acknowledgment rate</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">60-85%</div>
+                        <div class="stat-label">Faster audit prep</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="showcase">
+        <div class="container">
+            <div class="showcase-grid">
+                <div class="showcase-item showcase-main">
+                    <img src="dashboard.png" alt="PolicyHub Dashboard">
+                </div>
+                <div class="showcase-item">
+                    <img src="ai-copilot.png" alt="AI Co-Pilot">
+                </div>
+                <div class="showcase-item">
+                    <img src="policy-viewer.png" alt="Policy Viewer">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="problem" class="problem">
+        <div class="container">
+            <div class="section-header">
+                <p class="eyebrow">The Problem</p>
+                <h2>Policy management is fundamentally broken</h2>
+                <p class="section-lead">
+                    Organizations struggle with version control chaos, email approvals, passive acknowledgment, and zero visibility into actual compliance.
+                </p>
+            </div>
+
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-stat">78%</div>
+                    <h3 class="pain-title">Acknowledgment Crisis</h3>
+                    <p>Organizations struggle with policy acknowledgment tracking. Only 20% have digital attestation systems. Current rates: 30-50%.</p>
+                </div>
+
+                <div class="pain-card">
+                    <div class="pain-stat">€20M</div>
+                    <h3 class="pain-title">Compliance Violations</h3>
+                    <p>GDPR fines up to €20M or 4% of revenue. HIPAA violations cost $100K-$1.6M per breach. One policy failure can devastate your bottom line.</p>
+                </div>
+
+                <div class="pain-card">
+                    <div class="pain-stat">8-12 weeks</div>
+                    <h3 class="pain-title">Creation Bottleneck</h3>
+                    <p>Manual policy creation takes months. Version control chaos, endless email approvals, and stakeholder bottlenecks slow everything down.</p>
+                </div>
+
+                <div class="pain-card">
+                    <div class="pain-stat">$125K-$500K</div>
+                    <h3 class="pain-title">Litigation Risk</h3>
+                    <p>Employment litigation costs average $125K-$500K per settlement. Outdated or inaccessible policies leave you legally exposed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="solution" class="solution">
+        <div class="container">
+            <div class="section-header">
+                <p class="eyebrow">The Solution</p>
+                <h2>Complete lifecycle management in 7 integrated modules</h2>
+                <p class="section-lead">
+                    PolicyHub covers Stages 2-7 of the enterprise policy lifecycle—from collaborative authoring through continuous compliance.
+                </p>
+            </div>
+
+            <div class="modules-grid">
+                <div class="module">
+                    <div class="module-number">01</div>
+                    <h3>Policy Authoring & Collaboration</h3>
+                    <p>Real-time collaborative editing, AI-powered writing assistance, smart templates, and complete version control.</p>
+                    <div class="module-metric">50-70% faster creation</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-number">02</div>
+                    <h3>Approval Workflow Management</h3>
+                    <p>Visual workflow designer, digital signatures, automated routing, and real-time progress tracking.</p>
+                    <div class="module-metric">3-5 days faster approvals</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-number">03</div>
+                    <h3>Policy Distribution & Publishing</h3>
+                    <p>Multi-channel delivery (Slack, Teams, WhatsApp), centralized repository, and policy memos for urgent updates.</p>
+                    <div class="module-metric">95%+ notification reach</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-number">04</div>
+                    <h3>Policy Adoption & Engagement</h3>
+                    <p>Verified comprehension with interactive assessments (not passive checkboxes), gamification, and manager escalation.</p>
+                    <div class="module-metric">95%+ acknowledgment | 90%+ comprehension</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-number">05</div>
+                    <h3>Compliance Co-Pilot (AI Assistant)</h3>
+                    <p>AI-powered semantic search, just-in-time guidance, violation tracking, and behavioral analytics.</p>
+                    <div class="module-metric">&lt;30 seconds retrieval (20x faster)</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-number">06</div>
+                    <h3>Analytics & Review Management</h3>
+                    <p>Executive dashboards, automated review triggers, predictive analytics, and compliance reporting.</p>
+                    <div class="module-metric">60-85% faster audit prep</div>
+                </div>
+
+                <div class="module">
+                    <div class="module-number">07</div>
+                    <h3>Administration & Configuration</h3>
+                    <p>RBAC, SSO/MFA, HRIS integrations (Workday, BambooHR), and seamless collaboration tools.</p>
+                    <div class="module-metric">SOC 2 Type 2 ready</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="results" class="comparison">
+        <div class="container">
+            <div class="section-header">
+                <p class="eyebrow">Results</p>
+                <h2>Transform your policy metrics</h2>
+                <p class="section-lead">
+                    See the measurable impact PolicyHub delivers across the complete policy lifecycle.
+                </p>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Current State</th>
+                        <th>With PolicyHub</th>
+                        <th>Improvement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Policy Creation Time</strong></td>
+                        <td class="before">8-12 weeks</td>
+                        <td class="after">2-4 weeks</td>
+                        <td><span class="improvement">50-70% faster</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Acknowledgment Rate</strong></td>
+                        <td class="before">30-50%</td>
+                        <td class="after">95%+</td>
+                        <td><span class="improvement">2-3x improvement</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Comprehension Verification</strong></td>
+                        <td class="before">None (passive checkbox)</td>
+                        <td class="after">90%+ pass rate</td>
+                        <td><span class="improvement">New capability</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Policy Retrieval Time</strong></td>
+                        <td class="before">10 minutes</td>
+                        <td class="after">&lt;30 seconds</td>
+                        <td><span class="improvement">20x faster</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Audit Preparation</strong></td>
+                        <td class="before">4-12 weeks</td>
+                        <td class="after">1-2 weeks</td>
+                        <td><span class="improvement">60-85% reduction</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Compliance Visibility</strong></td>
+                        <td class="before">Reactive</td>
+                        <td class="after">Proactive real-time</td>
+                        <td><span class="improvement">Continuous monitoring</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to transform your policy management?</h2>
+            <p>Join leading organizations using PolicyHub to achieve 95%+ acknowledgment rates and 60-85% faster audit preparation.</p>
+            <a href="mailto:info@neuralnexus.lk?subject=PolicyHub Demo Request" class="btn">Request a Demo</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="Logo_Horizontal_Full_White.png" alt="NeuralNexus" class="footer-logo">
+                    <h3 class="footer-tagline">From Reactive to Real-Time</h3>
+                    <p class="footer-description">Compliance confidence. Audit readiness. Operational excellence.</p>
+                    <p class="footer-contact">
+                        Contact or WhatsApp <a href="https://wa.me/94777880390" target="_blank">+94 77 788 0390</a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NeuralNexus. Building the future with intelligent systems.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+        });
+
+        // Hide header on scroll down
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const header = document.querySelector('header');
+
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

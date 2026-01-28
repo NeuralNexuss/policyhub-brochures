@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolicyHub - Enterprise Policy Lifecycle Management Platform</title>
+    <meta name="description" content="Transform policy management from document chaos into systematic workflows with AI-powered engagement and data-driven compliance.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== NEO-BRUTALIST TECHNO-INDUSTRIAL AESTHETIC ==========
+         * Bold, unapologetic, high-contrast
+         * Heavy geometric shapes, sharp borders, diagonal elements
+         * Distinctive typography: Archivo Black + IBM Plex Mono + DM Sans
+         * Color: Electric lime + Deep black + Pure white + Industrial orange
+         */
+
+        :root {
+            /* Primary Palette */
+            --electric-lime: #CCFF00;
+            --deep-black: #0A0A0A;
+            --pure-white: #FFFFFF;
+            --industrial-orange: #FF6B00;
+            --cyber-blue: #00F0FF;
+
+            /* Grays */
+            --gray-100: #F5F5F5;
+            --gray-200: #E0E0E0;
+            --gray-300: #BDBDBD;
+            --gray-700: #424242;
+            --gray-800: #1A1A1A;
+            --gray-900: #121212;
+
+            /* Spacing */
+            --unit: 8px;
+            --gap-xs: calc(var(--unit) * 2);
+            --gap-sm: calc(var(--unit) * 3);
+            --gap-md: calc(var(--unit) * 4);
+            --gap-lg: calc(var(--unit) * 6);
+            --gap-xl: calc(var(--unit) * 8);
+            --gap-2xl: calc(var(--unit) * 12);
+            --gap-3xl: calc(var(--unit) * 16);
+
+            /* Border */
+            --border-thick: 4px;
+            --border-heavy: 6px;
+
+            /* Container */
+            --container: 1440px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--deep-black);
+            background: var(--deep-black);
+            overflow-x: hidden;
+        }
+
+        /* ========== TYPOGRAPHY ========== */
+        h1, h2, h3 {
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            margin-bottom: var(--gap-md);
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: var(--gap-md);
+        }
+
+        h3 {
+            font-size: clamp(1.75rem, 4vw, 3rem);
+            margin-bottom: var(--gap-sm);
+        }
+
+        h4 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* ========== PROGRESS BAR ========== */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 6px;
+            background: var(--electric-lime);
+            z-index: 10000;
+            width: 0%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 20px var(--electric-lime);
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--deep-black);
+            border-bottom: var(--border-thick) solid var(--electric-lime);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        header.hide {
+            transform: translateY(-100%);
+        }
+
+        nav {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: var(--gap-md) var(--gap-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--electric-lime);
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--gap-lg);
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--pure-white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: var(--gap-xs) var(--gap-sm);
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            border-color: var(--electric-lime);
+            color: var(--electric-lime);
+        }
+
+        .btn-nav {
+            background: var(--electric-lime);
+            color: var(--deep-black);
+            padding: var(--gap-sm) var(--gap-md);
+            border: none;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-nav:hover {
+            background: var(--industrial-orange);
+            transform: skewX(-5deg);
+        }
+
+        /* ========== CONTAINER ========== */
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 var(--gap-2xl);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--gap-lg);
+            }
+        }
+
+        section {
+            padding: var(--gap-2xl) 0;
+            position: relative;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            background: var(--deep-black);
+            padding: calc(var(--gap-3xl) + 10px) 0 var(--gap-3xl);
+            position: relative;
+            overflow: visible;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, var(--electric-lime) 100%);
+            opacity: 0.05;
+            transform: skewX(-15deg);
+        }
+
+        .hero-content {
+            position: relative;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            margin: var(--gap-xl) auto;
+            display: grid;
+            grid-template-columns: 45% 55%;
+            gap: var(--gap-lg);
+            align-items: center;
+        }
+
+        .hero-dashboard-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            grid-column: 2;
+        }
+
+        .child-images-row {
+            display: flex;
+            flex-direction: column;
+            gap: var(--gap-md);
+            grid-column: 1;
+            align-self: stretch;
+        }
+
+        .child-image {
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+
+        .child-image:first-child {
+            z-index: 3;
+        }
+
+        .child-image:last-child {
+            z-index: 2;
+        }
+
+        .child-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .hero h1 {
+            color: var(--pure-white);
+            position: relative;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 120px;
+            height: 8px;
+            background: var(--electric-lime);
+            transform: skewX(-15deg);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--gray-300);
+            margin: var(--gap-2xl) 0 var(--gap-lg);
+            max-width: 700px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: var(--gap-md);
+            margin-top: var(--gap-xl);
+            margin-bottom: var(--gap-1xl);
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: var(--gray-900);
+            border: var(--border-thick) solid var(--electric-lime);
+            padding: var(--gap-md);
+            position: relative;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 100%;
+            height: 100%;
+            background: var(--electric-lime);
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover::before {
+            top: -10px;
+            right: -10px;
+        }
+
+        .stat-num {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 3rem;
+            color: var(--electric-lime);
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--gray-300);
+            text-transform: uppercase;
+            margin-top: var(--gap-xs);
+            letter-spacing: 0.1em;
+        }
+
+
+        .hero-cta {
+            display: flex;
+            gap: var(--gap-md);
+            margin-top: var(--gap-xl);
+        }
+
+        .btn-primary {
+            background: var(--electric-lime);
+            color: var(--deep-black);
+            padding: var(--gap-md) var(--gap-xl);
+            border: none;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: var(--border-thick) solid var(--deep-black);
+        }
+
+        .btn-primary:hover {
+            background: var(--industrial-orange);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 0 var(--deep-black);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--pure-white);
+            padding: var(--gap-md) var(--gap-xl);
+            border: var(--border-thick) solid var(--pure-white);
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: var(--pure-white);
+            color: var(--deep-black);
+        }
+
+        /* ========== SECTION HEADER ========== */
+        .section-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--industrial-orange);
+            margin-bottom: var(--gap-sm);
+        }
+
+        .section-title {
+            max-width: 900px;
+            margin-bottom: var(--gap-xl);
+        }
+
+        /* ========== PROBLEM SECTION ========== */
+        .problem-section {
+            background: var(--gray-100);
+            position: relative;
+        }
+
+        .problem-section::before {
+            content: 'BROKEN';
+            position: absolute;
+            top: 50%;
+            right: -100px;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 15rem;
+            color: var(--gray-200);
+            transform: rotate(90deg) translateX(-50%);
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--gap-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .pain-card {
+            background: var(--pure-white);
+            border: var(--border-thick) solid var(--deep-black);
+            padding: var(--gap-lg);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pain-card::before {
+            content: '';
+            position: absolute;
+            top: var(--gap-xs);
+            left: var(--gap-xs);
+            right: calc(-1 * var(--gap-xs));
+            bottom: calc(-1 * var(--gap-xs));
+            background: var(--industrial-orange);
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .pain-card:hover::before {
+            top: var(--gap-sm);
+            left: var(--gap-sm);
+        }
+
+        .pain-number {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 5rem;
+            line-height: 1;
+            color: var(--deep-black);
+            margin-bottom: var(--gap-sm);
+        }
+
+        .pain-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: var(--gap-sm);
+        }
+
+        .risk-box {
+            background: var(--deep-black);
+            border: var(--border-heavy) solid var(--industrial-orange);
+            padding: var(--gap-xl);
+            margin-top: var(--gap-2xl);
+        }
+
+        .risk-box h3 {
+            color: var(--electric-lime);
+            margin-bottom: var(--gap-lg);
+        }
+
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--gap-lg);
+        }
+
+        .risk-item {
+            border-left: 4px solid var(--electric-lime);
+            padding-left: var(--gap-md);
+        }
+
+        .risk-amount {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            color: var(--industrial-orange);
+            display: block;
+            margin-bottom: var(--gap-xs);
+        }
+
+        .risk-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--gray-300);
+        }
+
+        /* ========== SOLUTION SECTION ========== */
+        .solution-section {
+            background: var(--pure-white);
+        }
+
+        .modules-stack {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--gap-md);
+        }
+
+        .module-row {
+            border: var(--border-thick) solid var(--deep-black);
+            background: var(--gray-100);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .module-row:hover {
+            transform: translateY(-5px);
+        }
+
+        .module-sidebar {
+            background: var(--deep-black);
+            padding: var(--gap-md);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: var(--border-thick) solid var(--electric-lime);
+        }
+
+        .module-num {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 3rem;
+            color: var(--electric-lime);
+            line-height: 1;
+        }
+
+        .module-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            background: var(--industrial-orange);
+            color: var(--deep-black);
+            padding: 4px 12px;
+            margin-top: var(--gap-sm);
+            font-weight: 700;
+        }
+
+        .module-badge.ai {
+            background: var(--cyber-blue);
+        }
+
+        .module-content {
+            padding: var(--gap-md);
+            flex: 1;
+        }
+
+        .module-content h3 {
+            font-size: 1rem;
+            margin-bottom: var(--gap-sm);
+        }
+
+        .module-content p {
+            font-size: 0.875rem;
+            line-height: 1.4;
+            margin-bottom: var(--gap-sm);
+        }
+
+        .module-row.highlight {
+            border-color: var(--industrial-orange);
+            border-width: var(--border-heavy);
+        }
+
+        .module-row.highlight .module-sidebar {
+            border-bottom-color: var(--industrial-orange);
+        }
+
+        .module-features {
+            list-style: none;
+            margin: var(--gap-sm) 0;
+        }
+
+        .module-features li {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            padding: 2px 0;
+            padding-left: var(--gap-sm);
+            position: relative;
+        }
+
+        .module-features li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--deep-black);
+            font-weight: 700;
+            font-size: 0.625rem;
+        }
+
+        .module-metric {
+            background: var(--deep-black);
+            color: var(--electric-lime);
+            padding: var(--gap-sm);
+            margin-top: var(--gap-sm);
+            border-left: var(--border-thick) solid var(--electric-lime);
+        }
+
+        .metric-value {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.25rem;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .metric-text {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.625rem;
+            color: var(--gray-300);
+            line-height: 1.3;
+        }
+
+        .integrations-block {
+            background: var(--deep-black);
+            border: var(--border-heavy) solid var(--electric-lime);
+            padding: var(--gap-xl);
+            margin-top: var(--gap-2xl);
+            text-align: center;
+        }
+
+        .integrations-block h3 {
+            color: var(--pure-white);
+            margin-bottom: var(--gap-lg);
+        }
+
+        .integration-grid {
+            display: flex;
+            justify-content: center;
+            gap: var(--gap-md);
+            flex-wrap: wrap;
+        }
+
+        .integration-item {
+            background: var(--gray-900);
+            border: 2px solid var(--gray-700);
+            padding: var(--gap-md);
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            color: var(--gray-300);
+            transition: all 0.2s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .integration-item:hover {
+            border-color: var(--electric-lime);
+            color: var(--electric-lime);
+        }
+
+        /* ========== ROI SECTION ========== */
+        .roi-section {
+            background: var(--gray-100);
+        }
+
+        .table-wrapper {
+            background: var(--pure-white);
+            border: var(--border-heavy) solid var(--deep-black);
+            overflow: hidden;
+            margin-bottom: var(--gap-2xl);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table thead {
+            background: var(--deep-black);
+        }
+
+        .comparison-table th {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--electric-lime);
+            padding: var(--gap-md);
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .comparison-table td {
+            padding: var(--gap-md);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .comparison-table tbody tr:hover {
+            background: var(--gray-100);
+        }
+
+        .metric-before {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--industrial-orange);
+            font-weight: 600;
+        }
+
+        .metric-after {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--deep-black);
+            font-weight: 700;
+        }
+
+        .improvement-tag {
+            background: var(--electric-lime);
+            color: var(--deep-black);
+            padding: 4px 12px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .competitor-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--gap-md);
+            margin-bottom: var(--gap-2xl);
+        }
+
+        .competitor-box {
+            background: var(--pure-white);
+            border: var(--border-thick) solid var(--gray-300);
+            padding: var(--gap-md);
+            text-align: center;
+        }
+
+        .competitor-box.policyhub {
+            background: var(--deep-black);
+            border-color: var(--electric-lime);
+            border-width: var(--border-heavy);
+            transform: scale(1.05);
+        }
+
+        .competitor-box.policyhub h4,
+        .competitor-box.policyhub p {
+            color: var(--pure-white);
+        }
+
+        .competitor-box h4 {
+            margin-bottom: var(--gap-sm);
+        }
+
+        .competitor-box p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            margin-bottom: var(--gap-xs);
+        }
+
+        .strength {
+            color: var(--deep-black);
+        }
+
+        .weakness {
+            color: var(--gray-400);
+        }
+
+        .competitor-box.policyhub .strength {
+            color: var(--electric-lime);
+        }
+
+        .mobile-section {
+            background: var(--deep-black);
+            border: var(--border-heavy) solid var(--industrial-orange);
+            padding: var(--gap-2xl);
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: var(--gap-2xl);
+            margin-bottom: var(--gap-2xl);
+        }
+
+        .mobile-section h3 {
+            color: var(--pure-white);
+        }
+
+        .mobile-section p {
+            color: var(--gray-300);
+        }
+
+        .mobile-features {
+            list-style: none;
+            margin-top: var(--gap-md);
+        }
+
+        .mobile-features li {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--gray-300);
+            padding: var(--gap-xs) 0;
+            padding-left: var(--gap-md);
+            position: relative;
+        }
+
+        .mobile-features li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--electric-lime);
+        }
+
+        .phone-mockup {
+            width: 280px;
+            height: 560px;
+            background: var(--pure-white);
+            border: var(--border-heavy) solid var(--pure-white);
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--gray-100);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-header {
+            background: var(--deep-black);
+            color: var(--electric-lime);
+            padding: var(--gap-md);
+            text-align: center;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.25rem;
+            border-bottom: 3px solid var(--electric-lime);
+        }
+
+        .phone-body {
+            padding: var(--gap-md);
+            display: flex;
+            flex-direction: column;
+            gap: var(--gap-sm);
+            flex: 1;
+        }
+
+        .phone-card {
+            background: var(--pure-white);
+            border: 2px solid var(--deep-black);
+            padding: var(--gap-sm);
+        }
+
+        .phone-bar {
+            height: 4px;
+            background: var(--gray-300);
+            margin-bottom: 6px;
+        }
+
+        .phone-bar:first-child {
+            width: 60%;
+            background: var(--deep-black);
+        }
+
+        .compliance-grid {
+            display: flex;
+            justify-content: center;
+            gap: var(--gap-md);
+            flex-wrap: wrap;
+        }
+
+        .compliance-badge {
+            background: var(--deep-black);
+            color: var(--electric-lime);
+            padding: var(--gap-sm) var(--gap-md);
+            border: 2px solid var(--electric-lime);
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            background: var(--deep-black);
+            border-top: var(--border-heavy) solid var(--electric-lime);
+            text-align: center;
+            padding: var(--gap-2xl) 0 0;
+        }
+
+        .cta-section h2 {
+            color: var(--pure-white);
+        }
+
+        .cta-section p {
+            color: var(--gray-300);
+            font-size: 1.25rem;
+            margin: var(--gap-md) 0 var(--gap-xl);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--gap-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            background: var(--electric-lime);
+            color: var(--deep-black);
+            padding: var(--gap-lg) var(--gap-2xl);
+            border: none;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1.125rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: var(--border-thick) solid var(--deep-black);
+        }
+
+        .btn-cta:hover {
+            background: var(--industrial-orange);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 0 var(--electric-lime);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: var(--pure-white);
+            border: var(--border-thick) solid var(--pure-white);
+        }
+
+        .btn-cta-secondary:hover {
+            background: var(--pure-white);
+            color: var(--deep-black);
+            box-shadow: 0 10px 0 var(--gray-700);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--gray-900);
+            color: var(--gray-300);
+            padding: var(--gap-3xl) 0 var(--gap-lg);
+            margin-top: 0;
+            border-top: 1px solid rgba(204, 255, 0, 0.2);
+        }
+
+        .footer-content {
+            text-align: center;
+            margin-bottom: var(--gap-2xl);
+        }
+
+        .footer-logo {
+            margin-bottom: var(--gap-md);
+        }
+
+        .footer-tagline {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.75rem;
+            color: var(--electric-lime);
+            margin-bottom: var(--gap-sm);
+            text-transform: uppercase;
+        }
+
+        .footer-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-300);
+            margin-bottom: var(--gap-lg);
+        }
+
+        .footer-contact {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1rem;
+            color: var(--gray-300);
+        }
+
+        .footer-contact a {
+            color: var(--electric-lime);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .footer-contact a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--gap-md);
+            border-top: 1px solid var(--gray-700);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--gray-400);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .mobile-section {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: var(--gap-md);
+            }
+
+            .stat-box {
+                width: 100%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .pain-grid,
+            .competitor-grid,
+            .risk-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modules-stack {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-image-container {
+                grid-template-columns: 1fr;
+                gap: var(--gap-md);
+            }
+
+            .hero-dashboard-img {
+                grid-column: 1;
+            }
+
+            .child-images-row {
+                grid-column: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .modules-stack {
+                grid-template-columns: 1fr;
+            }
+
+            .table-wrapper {
+                overflow-x: auto;
+            }
+
+            .comparison-table {
+                min-width: 600px;
+            }
+
+            .footer {
+                padding: var(--gap-2xl) 0 var(--gap-md);
+                margin-top: 0;
+            }
+
+            .footer-logo img {
+                height: 80px !important;
+            }
+
+            .footer-tagline {
+                font-size: 1.5rem;
+            }
+
+            .footer-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-in {
+            animation: slideInRight 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div id="progress-bar"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav class="container">
+            <div class="logo">
+                <img src="Logo_Full_white.png" alt="NeuralNexus PolicyHub" style="height: 40px;">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#roi">ROI</a></li>
+            </ul>
+            <a href="mailto:info@neuralnexus.lk" class="btn-nav">Get Demo</a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>TRANSFORM POLICY CHAOS INTO COMPLIANCE</h1>
+
+                <div class="hero-image-container">
+                    <div class="child-images-row">
+                        <div class="child-image">
+                            <img src="ai-copilot.png" alt="AI Co-Pilot">
+                        </div>
+                        <div class="child-image">
+                            <img src="policy-viewer.png" alt="Policy Viewer">
+                        </div>
+                    </div>
+                    <img src="dashboard.png" alt="PolicyHub Dashboard" class="hero-dashboard-img">
+                </div>
+
+                <p class="hero-subtitle">End-to-end platform for the complete policy lifecycle. AI-powered authoring through continuous compliance with verified comprehension.</p>
+
+                <div class="hero-cta">
+                    <a href="mailto:info@neuralnexus.lk" class="btn-primary">Request Demo</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <span class="stat-num">50-70%</span>
+                        <span class="stat-label">Faster Creation</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">95%+</span>
+                        <span class="stat-label">Acknowledgment</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">60-85%</span>
+                        <span class="stat-label">Faster Audits</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem" class="problem-section">
+        <div class="container">
+            <div class="section-tag">THE PROBLEM</div>
+            <h2 class="section-title">POLICY MANAGEMENT IS BROKEN</h2>
+            <p style="max-width: 800px; margin-bottom: 3rem; font-size: 1.25rem;">Organizations struggle with version control nightmares, email approvals, passive acknowledgment, and zero visibility into actual compliance.</p>
+
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-number">78%</div>
+                    <div class="pain-title">Acknowledgment Crisis</div>
+                    <p>Struggle with policy acknowledgment tracking. Only 20% have digital attestation systems. Current rates: 30-50%.</p>
+                </div>
+
+                <div class="pain-card">
+                    <div class="pain-number">71%</div>
+                    <div class="pain-title">Version Control Chaos</div>
+                    <p>Face version control and change tracking nightmares. Multiple copies, email chains, no single source of truth.</p>
+                </div>
+
+                <div class="pain-card">
+                    <div class="pain-number">68%</div>
+                    <div class="pain-title">Time Waste</div>
+                    <p>Waste time on manual, repetitive tasks. 8-12 weeks to create policies, hours to find current versions.</p>
+                </div>
+
+                <div class="pain-card">
+                    <div class="pain-number">64%</div>
+                    <div class="pain-title">Retrieval Nightmare</div>
+                    <p>Employees can't find policies when needed. Average: 10 minutes to locate the right document.</p>
+                </div>
+            </div>
+
+            <div class="risk-box">
+                <h3>THE COST OF POLICY FAILURES</h3>
+                <div class="risk-grid">
+                    <div class="risk-item">
+                        <span class="risk-amount">€20M OR 4%</span>
+                        <div class="risk-label">GDPR violations (per incident)</div>
+                    </div>
+                    <div class="risk-item">
+                        <span class="risk-amount">$100K-$1.6M</span>
+                        <div class="risk-label">HIPAA violations (per breach)</div>
+                    </div>
+                    <div class="risk-item">
+                        <span class="risk-amount">$125K-$500K</span>
+                        <div class="risk-label">Employment litigation (average settlement)</div>
+                    </div>
+                    <div class="risk-item">
+                        <span class="risk-amount">4-12 WEEKS</span>
+                        <div class="risk-label">Audit preparation time (manual processes)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section id="solution" class="solution-section">
+        <div class="container">
+            <div class="section-tag">THE SOLUTION</div>
+            <h2 class="section-title">7 INTEGRATED MODULES FOR COMPLETE LIFECYCLE MANAGEMENT</h2>
+            <p style="max-width: 800px; margin-bottom: 3rem; font-size: 1.25rem;">PolicyHub covers Stages 2-7 of the enterprise policy lifecycle—from collaborative authoring through continuous compliance.</p>
+
+            <div class="modules-stack">
+                <!-- Module 1 -->
+                <div class="module-row">
+                    <div class="module-sidebar">
+                        <div class="module-num">01</div>
+                    </div>
+                    <div class="module-content">
+                        <h3>POLICY AUTHORING & COLLABORATION</h3>
+                        <p>Eliminate version control chaos with real-time collaborative editing, AI-powered writing assistance, and intelligent templates.</p>
+                        <ul class="module-features">
+                            <li>Visual policy editor with rich text formatting</li>
+                            <li>Real-time collaboration (Google Docs-style)</li>
+                            <li>AI writing assistant for plain language</li>
+                            <li>Smart templates library</li>
+                            <li>Document import (Word, PDF conversion)</li>
+                            <li>Complete version control & audit trail</li>
+                        </ul>
+                        <div class="module-metric">
+                            <span class="metric-value">50-70% FASTER</span>
+                            <div class="metric-text">Policy creation time (from 8-12 weeks to 2-4 weeks)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="module-row">
+                    <div class="module-sidebar">
+                        <div class="module-num">02</div>
+                    </div>
+                    <div class="module-content">
+                        <h3>APPROVAL WORKFLOW MANAGEMENT</h3>
+                        <p>Automate approval routing with configurable workflows, digital signatures, and real-time progress tracking.</p>
+                        <ul class="module-features">
+                            <li>Visual workflow designer (drag-and-drop)</li>
+                            <li>Sequential, parallel, and conditional routing</li>
+                            <li>Digital signatures & e-signatures</li>
+                            <li>Automated notifications & escalations</li>
+                            <li>Real-time approval tracking</li>
+                            <li>Workflow analytics & bottleneck detection</li>
+                        </ul>
+                        <div class="module-metric">
+                            <span class="metric-value">3-5 DAYS FASTER</span>
+                            <div class="metric-text">Approval cycle time with automated routing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="module-row">
+                    <div class="module-sidebar">
+                        <div class="module-num">03</div>
+                    </div>
+                    <div class="module-content">
+                        <h3>POLICY DISTRIBUTION & PUBLISHING</h3>
+                        <p>Multi-channel distribution with centralized repository, version control, and temporary policy memos for urgent updates.</p>
+                        <ul class="module-features">
+                            <li>Multi-channel delivery (email, Slack, Teams, WhatsApp, mobile)</li>
+                            <li>Centralized policy repository with search</li>
+                            <li>Publishing controls & scheduled releases</li>
+                            <li>Policy memos (temporary amendments)</li>
+                            <li>Archive & retention management</li>
+                            <li>Distribution analytics & reach metrics</li>
+                        </ul>
+                        <div class="module-metric">
+                            <span class="metric-value">95%+ REACH</span>
+                            <div class="metric-text">Notification delivery rate across channels</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="module-row">
+                    <div class="module-sidebar">
+                        <div class="module-num">04</div>
+                    </div>
+                    <div class="module-content">
+                        <h3>POLICY ADOPTION & ENGAGEMENT</h3>
+                        <p>Verified comprehension with interactive assessments, gamification, and manager escalation.</p>
+                        <ul class="module-features">
+                            <li>Comprehension verification (quiz-based, not passive)</li>
+                            <li>Gamification (points, badges, leaderboards)</li>
+                            <li>Manager escalation for non-compliance</li>
+                            <li>Onboarding policy packages for new hires</li>
+                            <li>Multi-modal content (video, infographics)</li>
+                            <li>Scenario-based training modules</li>
+                            <li>Periodic re-certification workflows</li>
+                        </ul>
+                        <div class="module-metric">
+                            <span class="metric-value">95%+ ACK | 90%+ COMP</span>
+                            <div class="metric-text">2-3x improvement over industry baseline (30-50%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 5 -->
+                <div class="module-row">
+                    <div class="module-sidebar">
+                        <div class="module-num">05</div>
+                    </div>
+                    <div class="module-content">
+                        <h3>COMPLIANCE CO-PILOT (AI ASSISTANT)</h3>
+                        <p>AI chatbot provides just-in-time policy guidance, semantic search, and proactive compliance recommendations.</p>
+                        <ul class="module-features">
+                            <li>AI-powered semantic search (natural language queries)</li>
+                            <li>Just-in-time guidance at point of need</li>
+                            <li>Personal policy library (favorites & bookmarks)</li>
+                            <li>Violation tracking & automated reporting</li>
+                            <li>Exception request management</li>
+                            <li>Automated compliance checks</li>
+                            <li>Behavioral analytics & risk scoring</li>
+                        </ul>
+                        <div class="module-metric">
+                            <span class="metric-value">&lt;30 SECONDS</span>
+                            <div class="metric-text">Policy retrieval time (vs 10 minutes baseline) — 20x faster</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 6 -->
+                <div class="module-row">
+                    <div class="module-sidebar">
+                        <div class="module-num">06</div>
+                    </div>
+                    <div class="module-content">
+                        <h3>ANALYTICS & REVIEW MANAGEMENT</h3>
+                        <p>Data-driven insights with executive dashboards, automated review triggers, and predictive compliance analytics.</p>
+                        <ul class="module-features">
+                            <li>Policy analytics (usage, engagement, gaps)</li>
+                            <li>Automated review triggers (time-based, event-based)</li>
+                            <li>Compliance reporting & audit trails</li>
+                            <li>Effectiveness metrics & KPIs</li>
+                            <li>Executive dashboards</li>
+                            <li>Predictive analytics (risk modeling)</li>
+                            <li>Regulatory mapping & change tracking</li>
+                            <li>Industry benchmarking</li>
+                        </ul>
+                        <div class="module-metric">
+                            <span class="metric-value">60-85% REDUCTION</span>
+                            <div class="metric-text">Audit preparation time (4-12 weeks to 1-2 weeks)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 7 -->
+                <div class="module-row">
+                    <div class="module-sidebar">
+                        <div class="module-num">07</div>
+                    </div>
+                    <div class="module-content">
+                        <h3>ADMINISTRATION & CONFIGURATION</h3>
+                        <p>Enterprise-grade administration with SSO, role-based access control, and seamless integrations.</p>
+                        <ul class="module-features">
+                            <li>User & access management (RBAC)</li>
+                            <li>SSO & MFA (Auth0, Okta)</li>
+                            <li>HRIS integrations (Workday, BambooHR, ADP)</li>
+                            <li>Collaboration tools (Slack, Teams, WhatsApp)</li>
+                            <li>Platform configuration & customization</li>
+                            <li>System monitoring & health checks</li>
+                            <li>API & webhooks for custom integrations</li>
+                        </ul>
+                        <div class="module-metric">
+                            <span class="metric-value">SOC 2 TYPE 2 READY</span>
+                            <div class="metric-text">Enterprise security & compliance standards</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="integrations-block">
+                <h3>SEAMLESS INTEGRATIONS WITH YOUR EXISTING STACK</h3>
+                <div class="integration-grid">
+                    <div class="integration-item">SLACK</div>
+                    <div class="integration-item">MICROSOFT TEAMS</div>
+                    <div class="integration-item">WHATSAPP BUSINESS</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI -->
+    <section id="roi" class="roi-section">
+        <div class="container">
+            <div class="section-tag">ROI & VALUE</div>
+            <h2 class="section-title">TRANSFORM YOUR POLICY METRICS</h2>
+            <p style="max-width: 800px; margin-bottom: 3rem; font-size: 1.25rem;">See the measurable impact PolicyHub delivers across the complete policy lifecycle.</p>
+
+            <div class="table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>METRIC</th>
+                            <th>CURRENT STATE</th>
+                            <th>WITH POLICYHUB</th>
+                            <th>IMPROVEMENT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Policy Creation Time</strong></td>
+                            <td class="metric-before">8-12 weeks</td>
+                            <td class="metric-after">2-4 weeks</td>
+                            <td><span class="improvement-tag">50-70% faster</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Acknowledgment Rate</strong></td>
+                            <td class="metric-before">30-50%</td>
+                            <td class="metric-after">95%+</td>
+                            <td><span class="improvement-tag">2-3x improvement</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comprehension Verification</strong></td>
+                            <td class="metric-before">None (passive checkbox)</td>
+                            <td class="metric-after">90%+ pass rate</td>
+                            <td><span class="improvement-tag">New capability</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Policy Retrieval Time</strong></td>
+                            <td class="metric-before">10 minutes</td>
+                            <td class="metric-after">&lt;30 seconds</td>
+                            <td><span class="improvement-tag">20x faster</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Audit Preparation Time</strong></td>
+                            <td class="metric-before">4-12 weeks</td>
+                            <td class="metric-after">1-2 weeks</td>
+                            <td><span class="improvement-tag">60-85% reduction</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Compliance Visibility</strong></td>
+                            <td class="metric-before">Reactive (discover during audits)</td>
+                            <td class="metric-after">Proactive (real-time dashboards)</td>
+                            <td><span class="improvement-tag">Continuous monitoring</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="text-align: center; margin-bottom: 3rem;">WHY POLICYHUB WINS</h3>
+
+            <div class="competitor-grid">
+                <div class="competitor-box">
+                    <h4>ENTERPRISE GRC</h4>
+                    <p class="strength">Strong authoring tools</p>
+                    <p class="strength">Workflow automation</p>
+                    <p class="weakness">Weak engagement/adoption</p>
+                    <p class="weakness">No comprehension verification</p>
+                    <p class="weakness">Limited analytics</p>
+                </div>
+
+                <div class="competitor-box">
+                    <h4>LMS PLATFORMS</h4>
+                    <p class="strength">Strong training/acknowledgment</p>
+                    <p class="strength">Course management</p>
+                    <p class="weakness">No policy authoring</p>
+                    <p class="weakness">No lifecycle management</p>
+                    <p class="weakness">No approval workflows</p>
+                </div>
+
+                <div class="competitor-box">
+                    <h4>DOCUMENT MGMT</h4>
+                    <p class="strength">Version control</p>
+                    <p class="strength">File storage</p>
+                    <p class="weakness">No workflows</p>
+                    <p class="weakness">No engagement tools</p>
+                    <p class="weakness">No compliance tracking</p>
+                </div>
+
+                <div class="competitor-box policyhub">
+                    <h4>POLICYHUB</h4>
+                    <p class="strength">Complete lifecycle management</p>
+                    <p class="strength">AI-powered engagement</p>
+                    <p class="strength">Comprehension verification</p>
+                    <p class="strength">Just-in-time compliance</p>
+                    <p class="strength">End-to-end analytics</p>
+                    <p style="margin-top: 1rem; font-weight: 700;">THE ONLY COMPLETE SOLUTION</p>
+                </div>
+            </div>
+
+            <div class="mobile-section">
+                <div>
+                    <h3>MOBILE-FIRST EMPLOYEE EXPERIENCE</h3>
+                    <p>Reach frontline workers where they are—on their phones. 80% of the workforce doesn't sit at a desk.</p>
+                    <ul class="mobile-features">
+                        <li>Offline policy access</li>
+                        <li>Push notifications for new policies</li>
+                        <li>One-tap acknowledgment & assessments</li>
+                        <li>AI chatbot for instant answers</li>
+                        <li>Gamification on mobile</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="phone-header">POLICYHUB</div>
+                            <div class="phone-body">
+                                <div class="phone-card">
+                                    <div class="phone-bar"></div>
+                                    <div class="phone-bar"></div>
+                                </div>
+                                <div class="phone-card">
+                                    <div class="phone-bar"></div>
+                                    <div class="phone-bar"></div>
+                                </div>
+                                <div class="phone-card">
+                                    <div class="phone-bar"></div>
+                                    <div class="phone-bar"></div>
+                                </div>
+                                <div class="phone-card">
+                                    <div class="phone-bar"></div>
+                                    <div class="phone-bar"></div>
+                                </div>
+                                <div class="phone-card">
+                                    <div class="phone-bar"></div>
+                                    <div class="phone-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; margin-bottom: 2rem;">BUILT FOR COMPLIANCE</h3>
+            <div class="compliance-grid">
+                <div class="compliance-badge">SOC 2 TYPE 2</div>
+                <div class="compliance-badge">ISO 27001:2013</div>
+                <div class="compliance-badge">GDPR COMPLIANT</div>
+                <div class="compliance-badge">HIPAA READY</div>
+                <div class="compliance-badge">21 CFR PART 11</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" class="cta-section">
+        <div class="container">
+            <h2>READY TO TRANSFORM YOUR POLICY MANAGEMENT?</h2>
+            <p>Join leading organizations using PolicyHub to achieve 95%+ acknowledgment rates and 60-85% faster audit prep.</p>
+            <div class="cta-buttons">
+                <a href="mailto:info@neuralnexus.lk?subject=PolicyHUB Demo Request" class="btn-cta">REQUEST A DEMO</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="Logo_Horizontal_Full_White.png" alt="NeuralNexus" style="height: 120px; margin-bottom: 1.5rem;">
+                </div>
+                <h3 class="footer-tagline">From Reactive to Real-Time</h3>
+                <p class="footer-subtitle">Compliance confidence. Audit readiness. Operational excellence.</p>
+                <p class="footer-contact">
+                    Contact or Whatsapp <a href="https://wa.me/94777880390" target="_blank">+94 77 788 0390</a> to schedule a demo.
+                </p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NeuralNexus. All rights reserved. | Building the future with intelligent systems.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Header Hide on Scroll Down
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                document.getElementById('header').classList.add('hide');
+            } else {
+                document.getElementById('header').classList.remove('hide');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 100;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
