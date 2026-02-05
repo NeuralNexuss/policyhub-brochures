@@ -67,9 +67,13 @@
             background: var(--cream);
             color: var(--gray-800);
             line-height: 1.75;
-            word-break: keep-all;
-            overflow-wrap: break-word;
+            /* Japanese text line-breaking strategy:
+               - line-break: strict = prevents breaks before small kana (っょャ) and prolonged marks (ー)
+               - overflow-wrap: break-word = allows wrapping between words when needed
+               - Critical katakana words are wrapped in <span class="nowrap"> for guaranteed protection
+               - Modern browsers with Chrome 119+ will use word-break: auto-phrase on headings for intelligent phrase breaking */
             line-break: strict;
+            overflow-wrap: break-word;
         }
 
         /* Japanese-style decorative pattern */
@@ -98,23 +102,38 @@
         h1 {
             font-size: clamp(1.875rem, 4.5vw, 3rem);
             letter-spacing: -0.02em;
-            word-break: keep-all;
-            overflow-wrap: anywhere;
             max-width: 100%;
+            /* Progressive enhancement for modern browsers */
+            word-break: auto-phrase;
+            text-wrap: balance;
+            /* Baseline for all browsers */
             line-break: strict;
+            overflow-wrap: break-word;
+        }
+
+        .nowrap {
+            white-space: nowrap;
+            display: inline-block;
         }
 
         h2 {
             font-size: clamp(1.75rem, 4vw, 2.75rem);
             letter-spacing: -0.01em;
-            word-break: keep-all;
-            overflow-wrap: normal;
+            /* Progressive enhancement for modern browsers */
+            word-break: auto-phrase;
+            text-wrap: balance;
+            /* Baseline for all browsers */
+            line-break: strict;
+            overflow-wrap: break-word;
         }
 
         h3 {
             font-size: clamp(1.25rem, 2.5vw, 1.5rem);
-            word-break: keep-all;
-            overflow-wrap: normal;
+            /* Progressive enhancement for modern browsers */
+            word-break: auto-phrase;
+            /* Baseline for all browsers */
+            line-break: strict;
+            overflow-wrap: break-word;
         }
 
         .label {
@@ -295,12 +314,15 @@
             margin: var(--space-lg) 0;
             padding-left: var(--space-md);
             border-left: 3px solid var(--gold);
+            line-break: strict;
+            overflow-wrap: break-word;
         }
 
         .hero-cta {
             display: flex;
             gap: var(--space-md);
             margin-top: var(--space-xl);
+            flex-wrap: wrap;
         }
 
         .stats-grid {
@@ -331,7 +353,8 @@
             font-size: 0.8125rem;
             color: var(--gray-600);
             font-weight: 600;
-            word-break: keep-all;
+            line-break: strict;
+            overflow-wrap: break-word;
         }
 
         @media (max-width: 768px) {
@@ -412,6 +435,8 @@
             max-width: 800px;
             margin: var(--space-md) auto 0;
             line-height: 1.8;
+            line-break: strict;
+            overflow-wrap: break-word;
         }
 
         /* Problem Section */
@@ -465,14 +490,17 @@
             font-weight: 700;
             margin-bottom: var(--space-sm);
             color: var(--indigo-dark);
-            word-break: keep-all;
-            overflow-wrap: normal;
+            word-break: auto-phrase;
+            line-break: strict;
+            overflow-wrap: break-word;
         }
 
         .pain-card p {
             font-size: 0.9375rem;
             color: var(--gray-600);
             line-height: 1.7;
+            line-break: strict;
+            overflow-wrap: break-word;
         }
 
         @media (max-width: 768px) {
@@ -554,8 +582,9 @@
             font-size: 1rem;
             color: var(--white);
             font-weight: 700;
-            word-break: keep-all;
-            overflow-wrap: normal;
+            word-break: auto-phrase;
+            line-break: strict;
+            overflow-wrap: break-word;
         }
 
         .module p {
@@ -563,6 +592,8 @@
             color: rgba(255, 255, 255, 0.75);
             line-height: 1.7;
             margin-bottom: var(--space-md);
+            line-break: strict;
+            overflow-wrap: break-word;
         }
 
         .module-metric {
@@ -660,6 +691,142 @@
 
             .comparison-table {
                 min-width: 700px;
+            }
+        }
+
+        /* Competitive Comparison */
+        .competitive-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .competitive-header h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: var(--space-md);
+            color: var(--indigo-dark);
+            word-break: auto-phrase;
+            line-break: strict;
+            overflow-wrap: break-word;
+        }
+
+        .competitive-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .competitor-card {
+            background: var(--white);
+            border: var(--border-medium) solid var(--gray-200);
+            padding: var(--space-xl);
+            border-radius: var(--border-radius-lg);
+            transition: all 0.3s;
+        }
+
+        .competitor-card:hover {
+            border-color: var(--gray-300);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(30, 58, 95, 0.12);
+        }
+
+        .competitor-card h4 {
+            font-family: var(--font-english);
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: var(--space-lg);
+            color: var(--indigo-dark);
+            border-bottom: var(--border-medium) solid var(--vermillion);
+            padding-bottom: var(--space-sm);
+        }
+
+        .competitor-card p {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: var(--space-xs);
+            line-break: strict;
+            overflow-wrap: break-word;
+        }
+
+        .competitor-card .strength {
+            color: var(--gray-800);
+            font-weight: 500;
+        }
+
+        .competitor-card .strength::before {
+            content: '✓ ';
+            color: var(--gold);
+            font-weight: 700;
+            margin-right: 0.25rem;
+        }
+
+        .competitor-card .weakness {
+            color: var(--gray-600);
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        .competitor-card .weakness::before {
+            content: '✗ ';
+            color: var(--gray-600);
+            margin-right: 0.25rem;
+        }
+
+        .competitor-card.highlight {
+            background: var(--indigo-dark);
+            border-color: var(--gold);
+            border-width: 3px;
+            transform: scale(1.02);
+        }
+
+        .competitor-card.highlight:hover {
+            transform: scale(1.02) translateY(-4px);
+            box-shadow: 0 16px 48px rgba(230, 57, 70, 0.25);
+        }
+
+        .competitor-card.highlight h4 {
+            color: var(--white);
+            border-bottom-color: var(--gold);
+        }
+
+        .competitor-card.highlight .strength {
+            color: var(--white);
+        }
+
+        .competitor-card.highlight .strength::before {
+            color: var(--gold);
+        }
+
+        .competitor-card.highlight .tagline {
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: var(--border-thin) solid rgba(255, 255, 255, 0.2);
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @media (max-width: 1024px) {
+            .competitive-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .competitive-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .competitor-card.highlight {
+                transform: scale(1);
+            }
+
+            .competitor-card.highlight:hover {
+                transform: translateY(-4px);
             }
         }
 
@@ -828,7 +995,7 @@
                 <li><a href="#solution">ソリューション</a></li>
                 <li><a href="#results">導入効果</a></li>
             </ul>
-            <a href="mailto:info@neuralnexus.lk" class="btn">デモのご依頼</a>
+            <a href="mailto:info@neuralnexus.lk?subject=デモのご依頼" class="btn">デモのご依頼</a>
         </nav>
     </header>
 
@@ -837,13 +1004,13 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <span class="label">企業ポリシー統合管理</span>
-                    <h1>ポリシーコンプライアンス<br>の変革</h1>
+                    <h1><span class="nowrap">ポリシー管理</span>を効率化</h1>
                     <p class="hero-description">
-                        ポリシーのライフサイクル全体を管理する統合プラットフォーム。AIを活用した作成支援から、確実な理解度確認、継続的なコンプライアンス監視まで、すべてを一元管理できます。
+                        <span class="nowrap">ポリシー</span>の<span class="nowrap">ライフサイクル</span>全体を管理する統合<span class="nowrap">プラットフォーム</span>。AI活用の作成支援から理解度確認、継続的な<span class="nowrap">コンプライアンス</span>監視まで一元管理を実現します。
                     </p>
 
                     <div class="hero-cta">
-                        <a href="mailto:info@neuralnexus.lk" class="btn">デモのご依頼</a>
+                        <a href="mailto:info@neuralnexus.lk?subject=デモのご依頼" class="btn">デモのご依頼</a>
                         <a href="https://wa.me/94777880390" class="btn btn-outline" target="_blank">お問い合わせ</a>
                     </div>
                 </div>
@@ -886,9 +1053,9 @@
         <div class="container">
             <div class="section-header">
                 <span class="label">現状の課題</span>
-                <h2>ポリシー管理の根本的な問題</h2>
+                <h2><span class="nowrap">ポリシー管理</span>のよくある課題</h2>
                 <p class="section-lead">
-                    多くの企業では、バージョン管理の混乱、メールでの承認フロー、形式的な確認作業、コンプライアンス状況の可視化不足といった課題を抱えています。
+                    多くの企業が、<span class="nowrap">バージョン管理</span>の混乱や<span class="nowrap">メール</span>ベースの<span class="nowrap">承認フロー</span>、形式的な確認作業といった課題を抱えています。<span class="nowrap">コンプライアンス</span>状況の可視化も十分とは言えません。
                 </p>
             </div>
 
@@ -901,20 +1068,20 @@
 
                 <div class="pain-card">
                     <div class="pain-stat">最大1億円</div>
-                    <h3 class="pain-title">コンプライアンス違反のリスク</h3>
-                    <p>個人情報保護法違反では最大1億円の罰金が科されます。金融庁のペナルティは3,000万円から3億円の範囲に及び、一度のポリシー違反が事業に深刻な影響を与える可能性があります。</p>
+                    <h3 class="pain-title"><span class="nowrap">コンプライアンス</span>違反の<span class="nowrap">リスク</span></h3>
+                    <p>個人情報保護法違反では最大1億円の罰金が科されます。金融庁の<span class="nowrap">ペナルティ</span>は3,000万円から3億円の範囲に及びます。<span class="nowrap">ポリシー</span>違反は事業に大きな影響を及ぼす可能性があります。</p>
                 </div>
 
                 <div class="pain-card">
                     <div class="pain-stat">8〜12週間</div>
-                    <h3 class="pain-title">作成プロセスのボトルネック</h3>
-                    <p>手動でのポリシー作成には数ヶ月を要します。バージョン管理の混乱、メールでの承認フロー、関係者間の調整により、プロセス全体が遅延します。</p>
+                    <h3 class="pain-title">作成<span class="nowrap">プロセス</span>の<span class="nowrap">ボトルネック</span></h3>
+                    <p>手動での<span class="nowrap">ポリシー</span>作成には数ヶ月を要します。<span class="nowrap">バージョン管理</span>の混乱、<span class="nowrap">メール</span>での<span class="nowrap">承認フロー</span>、関係者間の調整により、<span class="nowrap">プロセス</span>全体が遅延します。</p>
                 </div>
 
                 <div class="pain-card">
                     <div class="pain-stat">平均5,000万円</div>
-                    <h3 class="pain-title">訴訟リスク</h3>
-                    <p>労働基準法違反や雇用関連の訴訟では、平均5,000万円の和解金が発生します。古いポリシーや不明確なポリシーは、企業に法的リスクをもたらします。</p>
+                    <h3 class="pain-title">訴訟<span class="nowrap">リスク</span></h3>
+                    <p>労働基準法違反や雇用関連の訴訟では、平均5,000万円の和解金が発生します。古い<span class="nowrap">ポリシー</span>や不明確な<span class="nowrap">ポリシー</span>は、企業に法的<span class="nowrap">リスク</span>をもたらします。</p>
                 </div>
             </div>
         </div>
@@ -924,9 +1091,9 @@
         <div class="container">
             <div class="section-header">
                 <span class="label">ソリューション</span>
-                <h2>7つの統合モジュールによる完全なライフサイクル管理</h2>
+                <h2>7つの<span class="nowrap">モジュール</span>で<span class="nowrap">ライフサイクル</span>全体を管理</h2>
                 <p class="section-lead">
-                    PolicyHubは、企業ポリシーのライフサイクル全体（ステージ2〜7）をカバーします。共同作成から継続的なコンプライアンス監視まで、すべてを統合管理できます。
+                    PolicyHubは企業<span class="nowrap">ポリシー</span>の<span class="nowrap">ライフサイクル</span>全体（<span class="nowrap">ステージ</span>2〜7）に対応。共同作成から継続的な<span class="nowrap">コンプライアンス</span>監視まで統合管理が可能です。
                 </p>
             </div>
 
@@ -934,63 +1101,63 @@
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">01</span>
-                        <h3>ポリシー作成・共同編集</h3>
+                        <h3><span class="nowrap">ポリシー</span>作成・共同編集</h3>
                     </div>
-                    <p>リアルタイムでの共同編集、AIによる作成支援、スマートテンプレート、完全なバージョン管理機能により、効率的なポリシー作成を実現します。</p>
+                    <p><span class="nowrap">リアルタイム</span>共同編集、AI作成支援、<span class="nowrap">スマートテンプレート</span>、<span class="nowrap">バージョン管理</span>などにより効率的な<span class="nowrap">ポリシー</span>作成が可能です。</p>
                     <div class="module-metric">→ 作成時間を50〜70%短縮</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">02</span>
-                        <h3>承認ワークフロー管理</h3>
+                        <h3>承認<span class="nowrap">ワークフロー</span>管理</h3>
                     </div>
-                    <p>ビジュアルなワークフローデザイナー、デジタル署名、自動ルーティング、リアルタイムでの進捗管理により、承認プロセスを効率化します。</p>
+                    <p><span class="nowrap">ビジュアル</span>な<span class="nowrap">ワークフローデザイナー</span>、<span class="nowrap">デジタル</span>署名、自動<span class="nowrap">ルーティング</span>、<span class="nowrap">リアルタイム</span>進捗管理で承認<span class="nowrap">プロセス</span>を効率化。</p>
                     <div class="module-metric">→ 承認期間を3〜5日短縮</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">03</span>
-                        <h3>ポリシー配布・公開</h3>
+                        <h3><span class="nowrap">ポリシー</span>配布・公開</h3>
                     </div>
-                    <p>Slack、Teams、WhatsAppなどマルチチャネルでの配信、一元化されたリポジトリ、緊急更新のためのポリシーメモ機能を提供します。</p>
+                    <p>Slack、Teams、<span class="nowrap">WhatsApp</span>など<span class="nowrap">マルチチャネル</span>で配信。一元化された<span class="nowrap">リポジトリ</span>と緊急更新用の<span class="nowrap">ポリシーメモ</span>機能を搭載。</p>
                     <div class="module-metric">→ 95%以上の通知到達率を実現</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">04</span>
-                        <h3>ポリシー浸透・エンゲージメント</h3>
+                        <h3><span class="nowrap">ポリシー</span>浸透・<span class="nowrap">エンゲージメント</span></h3>
                     </div>
-                    <p>インタラクティブな評価による確実な理解度確認（形式的なチェックボックスではありません）、ゲーミフィケーション、管理者へのエスカレーション機能を搭載しています。</p>
+                    <p>双方向の確認<span class="nowrap">テスト</span>で理解度を検証（形式的な<span class="nowrap">チェックボックス</span>ではありません）。<span class="nowrap">ゲーム</span>化要素や管理者への<span class="nowrap">エスカレーション</span>機能も搭載。</p>
                     <div class="module-metric">→ 95%以上の承認率と90%以上の理解度を達成</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">05</span>
-                        <h3>コンプライアンス・コパイロット（AIアシスタント）</h3>
+                        <h3><span class="nowrap">コンプライアンス</span>・<span class="nowrap">コパイロット</span>（AI<span class="nowrap">アシスタント</span>）</h3>
                     </div>
-                    <p>AIによるセマンティック検索、必要な時に必要なガイダンスを提供、違反の追跡、行動分析により、日常業務でのコンプライアンスを支援します。</p>
+                    <p>AI<span class="nowrap">セマンティック</span>検索で必要な<span class="nowrap">ガイダンス</span>を即座に提供。違反追跡や行動分析で日常業務の<span class="nowrap">コンプライアンス</span>を支援。</p>
                     <div class="module-metric">→ 検索時間を30秒未満に短縮（20倍高速化）</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">06</span>
-                        <h3>分析・レビュー管理</h3>
+                        <h3>分析・<span class="nowrap">レビュー</span>管理</h3>
                     </div>
-                    <p>経営層向けダッシュボード、自動レビュートリガー、予測分析、コンプライアンスレポート機能により、データに基づいた意思決定を支援します。</p>
+                    <p>経営層向け<span class="nowrap">ダッシュボード</span>、自動<span class="nowrap">レビュートリガー</span>、予測分析、<span class="nowrap">コンプライアンスレポート</span>で<span class="nowrap">データ</span>に基づく意思決定を実現。</p>
                     <div class="module-metric">→ 監査準備時間を60〜85%短縮</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">07</span>
-                        <h3>システム管理・設定</h3>
+                        <h3><span class="nowrap">システム</span>管理・設定</h3>
                     </div>
-                    <p>役割ベースのアクセス制御（RBAC）、シングルサインオン・多要素認証、人事システム連携（Workday、BambooHR）により、セキュアな運用を実現します。</p>
+                    <p>役割<span class="nowrap">ベース</span>の<span class="nowrap">アクセス</span>制御（RBAC）、<span class="nowrap">シングルサインオン</span>・多要素認証、人事<span class="nowrap">システム</span>連携（Workday、BambooHR）で<span class="nowrap">セキュア</span>な運用を実現。</p>
                     <div class="module-metric">→ SOC 2 Type 2準拠</div>
                 </div>
             </div>
@@ -1001,9 +1168,9 @@
         <div class="container">
             <div class="section-header">
                 <span class="label">導入効果</span>
-                <h2>ポリシー管理指標の改善</h2>
+                <h2><span class="nowrap">ポリシー管理</span>指標を改善</h2>
                 <p class="section-lead">
-                    PolicyHubの導入により、ポリシーのライフサイクル全体で測定可能な効果が得られます。
+                    PolicyHub導入により、<span class="nowrap">ポリシー</span>の<span class="nowrap">ライフサイクル</span>全体で測定可能な効果を実現。
                 </p>
             </div>
 
@@ -1057,6 +1224,49 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="competitive-header">
+                <h3>PolicyHubが選ばれる理由</h3>
+            </div>
+
+            <div class="competitive-grid">
+                <div class="competitor-card">
+                    <h4><span class="nowrap">エンタープライズGRC</span></h4>
+                    <p class="strength">強力な作成<span class="nowrap">ツール</span></p>
+                    <p class="strength"><span class="nowrap">ワークフロー</span>自動化</p>
+                    <p class="weakness"><span class="nowrap">エンゲージメント</span>が弱い</p>
+                    <p class="weakness">理解度検証なし</p>
+                    <p class="weakness">限定的な分析機能</p>
+                </div>
+
+                <div class="competitor-card">
+                    <h4><span class="nowrap">LMS</span><span class="nowrap">プラットフォーム</span></h4>
+                    <p class="strength">充実した研修・承認機能</p>
+                    <p class="strength"><span class="nowrap">コース</span>管理</p>
+                    <p class="weakness"><span class="nowrap">ポリシー</span>作成機能なし</p>
+                    <p class="weakness"><span class="nowrap">ライフサイクル</span>管理なし</p>
+                    <p class="weakness">承認<span class="nowrap">ワークフロー</span>なし</p>
+                </div>
+
+                <div class="competitor-card">
+                    <h4><span class="nowrap">ドキュメント</span>管理</h4>
+                    <p class="strength"><span class="nowrap">バージョン</span>管理</p>
+                    <p class="strength"><span class="nowrap">ファイル</span>保管</p>
+                    <p class="weakness"><span class="nowrap">ワークフロー</span>なし</p>
+                    <p class="weakness"><span class="nowrap">エンゲージメント</span><span class="nowrap">ツール</span>なし</p>
+                    <p class="weakness"><span class="nowrap">コンプライアンス</span>追跡なし</p>
+                </div>
+
+                <div class="competitor-card highlight">
+                    <h4>PolicyHub</h4>
+                    <p class="strength">完全な<span class="nowrap">ライフサイクル</span>管理</p>
+                    <p class="strength">AI活用の<span class="nowrap">エンゲージメント</span></p>
+                    <p class="strength">理解度検証機能</p>
+                    <p class="strength">必要な時に<span class="nowrap">コンプライアンス</span>支援</p>
+                    <p class="strength"><span class="nowrap">エンドツーエンド</span>分析</p>
+                    <p class="tagline">唯一の統合<span class="nowrap">ソリューション</span></p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1079,9 +1289,9 @@
 
     <section class="cta">
         <div class="container">
-            <h2>ポリシー管理の変革を始めませんか</h2>
-            <p>PolicyHubを導入し、95%以上の承認率と60〜85%の監査準備時間短縮を実現している先進企業の仲間入りをしましょう。</p>
-            <a href="mailto:info@neuralnexus.lk?subject=PolicyHub デモのご依頼" class="btn">デモのご依頼</a>
+            <h2><span class="nowrap">ポリシー管理</span>の効率化を始めませんか</h2>
+            <p>PolicyHub導入により、95%以上の承認率と60〜85%の監査準備時間短縮を実現できます。</p>
+            <a href="mailto:info@neuralnexus.lk?subject=デモのご依頼" class="btn">デモのご依頼</a>
         </div>
     </section>
 
