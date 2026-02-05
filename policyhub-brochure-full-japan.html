@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PolicyHub — エンタープライズポリシーライフサイクル管理</title>
-    <meta name="description" content="Enterprise Policy Lifecycle Management Platform for Japanese Markets">
+    <title>PolicyHub — 企業ポリシー統合管理プラットフォーム</title>
+    <meta name="description" content="ポリシーのライフサイクル全体を管理する統合プラットフォーム。AI活用による作成支援から、確実な理解度確認、継続的なコンプライアンス監視まで。">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,6 +67,9 @@
             background: var(--cream);
             color: var(--gray-800);
             line-height: 1.75;
+            word-break: keep-all;
+            overflow-wrap: break-word;
+            line-break: strict;
         }
 
         /* Japanese-style decorative pattern */
@@ -93,17 +96,25 @@
         }
 
         h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: clamp(1.875rem, 4.5vw, 3rem);
             letter-spacing: -0.02em;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+            max-width: 100%;
+            line-break: strict;
         }
 
         h2 {
             font-size: clamp(1.75rem, 4vw, 2.75rem);
             letter-spacing: -0.01em;
+            word-break: keep-all;
+            overflow-wrap: normal;
         }
 
         h3 {
             font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+            word-break: keep-all;
+            overflow-wrap: normal;
         }
 
         .label {
@@ -117,6 +128,7 @@
             background: rgba(230, 57, 70, 0.08);
             border: var(--border-thin) solid var(--vermillion);
             border-radius: 3px;
+            white-space: nowrap;
         }
 
         .number-badge {
@@ -244,10 +256,7 @@
         }
 
         .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-2xl);
-            align-items: center;
+            max-width: 800px;
             margin-bottom: var(--space-2xl);
         }
 
@@ -257,6 +266,7 @@
             padding: var(--space-2xl);
             border-radius: var(--border-radius-lg);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
         }
 
         .hero-text .label {
@@ -293,18 +303,6 @@
             margin-top: var(--space-xl);
         }
 
-        .hero-image {
-            border: var(--border-medium) solid var(--indigo);
-            border-radius: var(--border-radius-lg);
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(30, 58, 95, 0.15);
-        }
-
-        .hero-image img {
-            width: 100%;
-            display: block;
-        }
-
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -333,12 +331,7 @@
             font-size: 0.8125rem;
             color: var(--gray-600);
             font-weight: 600;
-        }
-
-        @media (max-width: 1024px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-            }
+            word-break: keep-all;
         }
 
         @media (max-width: 768px) {
@@ -377,6 +370,10 @@
         .showcase-item img {
             width: 100%;
             display: block;
+        }
+
+        .showcase-main {
+            grid-column: 1 / -1;
         }
 
         @media (max-width: 768px) {
@@ -468,6 +465,8 @@
             font-weight: 700;
             margin-bottom: var(--space-sm);
             color: var(--indigo-dark);
+            word-break: keep-all;
+            overflow-wrap: normal;
         }
 
         .pain-card p {
@@ -555,6 +554,8 @@
             font-size: 1rem;
             color: var(--white);
             font-weight: 700;
+            word-break: keep-all;
+            overflow-wrap: normal;
         }
 
         .module p {
@@ -823,11 +824,11 @@
         <nav>
             <img src="Logo_Full_white.png" alt="NeuralNexus PolicyHub" class="logo">
             <ul class="nav-links">
-                <li><a href="#problem">課題 Problem</a></li>
-                <li><a href="#solution">ソリューション Solution</a></li>
-                <li><a href="#results">成果 Results</a></li>
+                <li><a href="#problem">課題</a></li>
+                <li><a href="#solution">ソリューション</a></li>
+                <li><a href="#results">導入効果</a></li>
             </ul>
-            <a href="mailto:info@neuralnexus.lk" class="btn">デモ依頼 Get Demo</a>
+            <a href="mailto:info@neuralnexus.lk" class="btn">デモのご依頼</a>
         </nav>
     </header>
 
@@ -835,35 +836,31 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <span class="label">エンタープライズポリシーライフサイクル管理</span>
-                    <h1>ポリシーコンプライアンス、変革<br><span style="font-size: 0.6em; font-weight: 500; opacity: 0.7;">Policy Compliance, Transformed</span></h1>
+                    <span class="label">企業ポリシー統合管理</span>
+                    <h1>ポリシーコンプライアンス<br>の変革</h1>
                     <p class="hero-description">
-                        完全なポリシーライフサイクルのためのエンドツーエンドプラットフォーム。AI支援による作成から、検証済みの理解度確認、継続的なコンプライアンス監視まで。<br><span style="opacity: 0.8;">End-to-end platform for the complete policy lifecycle. From AI-powered authoring to verified comprehension and continuous compliance monitoring.</span>
+                        ポリシーのライフサイクル全体を管理する統合プラットフォーム。AIを活用した作成支援から、確実な理解度確認、継続的なコンプライアンス監視まで、すべてを一元管理できます。
                     </p>
 
                     <div class="hero-cta">
-                        <a href="mailto:info@neuralnexus.lk" class="btn">デモ依頼 Request Demo</a>
-                        <a href="https://wa.me/94777880390" class="btn btn-outline" target="_blank">WhatsApp お問い合わせ</a>
+                        <a href="mailto:info@neuralnexus.lk" class="btn">デモのご依頼</a>
+                        <a href="https://wa.me/94777880390" class="btn btn-outline" target="_blank">お問い合わせ</a>
                     </div>
-                </div>
-
-                <div class="hero-image">
-                    <img src="dashboard.png" alt="PolicyHub Dashboard">
                 </div>
             </div>
 
             <div class="stats-grid">
                 <div class="stat-box">
                     <div class="stat-value">50-70%</div>
-                    <div class="stat-label">ポリシー作成の高速化<br><span style="font-size: 0.85em; opacity: 0.7;">Faster Policy Creation</span></div>
+                    <div class="stat-label">ポリシー作成時間を短縮</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-value">95%+</div>
-                    <div class="stat-label">承認率<br><span style="font-size: 0.85em; opacity: 0.7;">Acknowledgment Rate</span></div>
+                    <div class="stat-value">95%以上</div>
+                    <div class="stat-label">従業員の承認率を実現</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-value">60-85%</div>
-                    <div class="stat-label">監査準備の高速化<br><span style="font-size: 0.85em; opacity: 0.7;">Faster Audit Prep</span></div>
+                    <div class="stat-label">監査準備時間を短縮</div>
                 </div>
             </div>
         </div>
@@ -872,11 +869,14 @@
     <section class="showcase">
         <div class="container">
             <div class="showcase-grid">
-                <div class="showcase-item">
-                    <img src="ai-copilot.png" alt="AI Co-Pilot Assistant">
+                <div class="showcase-item showcase-main">
+                    <img src="dashboard.png" alt="PolicyHubダッシュボード">
                 </div>
                 <div class="showcase-item">
-                    <img src="policy-viewer.png" alt="Policy Viewer Interface">
+                    <img src="ai-copilot.png" alt="AIコパイロットアシスタント">
+                </div>
+                <div class="showcase-item">
+                    <img src="policy-viewer.png" alt="ポリシービューア画面">
                 </div>
             </div>
         </div>
@@ -885,36 +885,36 @@
     <section id="problem" class="problem">
         <div class="container">
             <div class="section-header">
-                <span class="label">課題 The Problem</span>
-                <h2>ポリシー管理の根本的な問題<br><span style="font-size: 0.6em; font-weight: 500; opacity: 0.7;">Policy Management Is Fundamentally Broken</span></h2>
+                <span class="label">現状の課題</span>
+                <h2>ポリシー管理の根本的な問題</h2>
                 <p class="section-lead">
-                    組織はバージョン管理の混乱、メール承認、受動的な承認、実際のコンプライアンスへの可視性の欠如に苦しんでいます。<br><span style="opacity: 0.8;">Organizations struggle with version control chaos, email approvals, passive acknowledgment, and zero visibility into actual compliance.</span>
+                    多くの企業では、バージョン管理の混乱、メールでの承認フロー、形式的な確認作業、コンプライアンス状況の可視化不足といった課題を抱えています。
                 </p>
             </div>
 
             <div class="pain-grid">
                 <div class="pain-card">
                     <div class="pain-stat">78%</div>
-                    <h3 class="pain-title">承認の危機 Acknowledgment Crisis</h3>
-                    <p>企業の78%がポリシー承認の追跡に苦労しています。デジタル証明システムを持つのはわずか20%。現在の承認率：30-50%<br><span style="opacity: 0.8; font-size: 0.9em;">Organizations struggle with policy acknowledgment tracking. Only 20% have digital attestation systems.</span></p>
+                    <h3 class="pain-title">承認管理の課題</h3>
+                    <p>企業の78%がポリシー承認の追跡に苦労しています。デジタル証明システムを持つのはわずか20%で、現在の承認率は30〜50%にとどまります。</p>
                 </div>
 
                 <div class="pain-card">
-                    <div class="pain-stat">¥1億</div>
-                    <h3 class="pain-title">コンプライアンス違反 Compliance Violations</h3>
-                    <p>APPI違反は最大¥1億の罰金。金融庁のペナルティは¥3000万〜3億の範囲。一度のポリシー失敗が事業を壊滅させる可能性があります。<br><span style="opacity: 0.8; font-size: 0.9em;">APPI violations up to ¥100M. FSA penalties range ¥30M-300M for financial sector non-compliance.</span></p>
+                    <div class="pain-stat">最大1億円</div>
+                    <h3 class="pain-title">コンプライアンス違反のリスク</h3>
+                    <p>個人情報保護法違反では最大1億円の罰金が科されます。金融庁のペナルティは3,000万円から3億円の範囲に及び、一度のポリシー違反が事業に深刻な影響を与える可能性があります。</p>
                 </div>
 
                 <div class="pain-card">
-                    <div class="pain-stat">8-12週間</div>
-                    <h3 class="pain-title">作成のボトルネック Creation Bottleneck</h3>
-                    <p>手動のポリシー作成には数ヶ月かかります。バージョン管理の混乱、延々と続くメール承認、利害関係者のボトルネックがすべてを遅らせます。<br><span style="opacity: 0.8; font-size: 0.9em;">Manual policy creation takes months. Version control chaos and stakeholder bottlenecks slow everything down.</span></p>
+                    <div class="pain-stat">8〜12週間</div>
+                    <h3 class="pain-title">作成プロセスのボトルネック</h3>
+                    <p>手動でのポリシー作成には数ヶ月を要します。バージョン管理の混乱、メールでの承認フロー、関係者間の調整により、プロセス全体が遅延します。</p>
                 </div>
 
                 <div class="pain-card">
-                    <div class="pain-stat">¥5000万</div>
-                    <h3 class="pain-title">訴訟リスク Litigation Risk</h3>
-                    <p>労働基準法違反と雇用訴訟は平均¥5000万の和解金。古いポリシーが法的リスクを生み出します。<br><span style="opacity: 0.8; font-size: 0.9em;">Labor Standards Act violations average ¥50M per settlement. Outdated policies create legal exposure.</span></p>
+                    <div class="pain-stat">平均5,000万円</div>
+                    <h3 class="pain-title">訴訟リスク</h3>
+                    <p>労働基準法違反や雇用関連の訴訟では、平均5,000万円の和解金が発生します。古いポリシーや不明確なポリシーは、企業に法的リスクをもたらします。</p>
                 </div>
             </div>
         </div>
@@ -923,10 +923,10 @@
     <section id="solution" class="solution">
         <div class="container">
             <div class="section-header">
-                <span class="label">ソリューション The Solution</span>
-                <h2>7つの統合モジュールによる完全なライフサイクル管理<br><span style="font-size: 0.6em; font-weight: 500; opacity: 0.8;">Complete Lifecycle Management in 7 Integrated Modules</span></h2>
+                <span class="label">ソリューション</span>
+                <h2>7つの統合モジュールによる完全なライフサイクル管理</h2>
                 <p class="section-lead">
-                    PolicyHubは、エンタープライズポリシーライフサイクルのステージ2〜7をカバー—共同作成から継続的なコンプライアンスまで。<br><span style="opacity: 0.8;">PolicyHub covers Stages 2-7 of the enterprise policy lifecycle—from collaborative authoring through continuous compliance.</span>
+                    PolicyHubは、企業ポリシーのライフサイクル全体（ステージ2〜7）をカバーします。共同作成から継続的なコンプライアンス監視まで、すべてを統合管理できます。
                 </p>
             </div>
 
@@ -934,64 +934,64 @@
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">01</span>
-                        <h3>ポリシー作成と共同作業<br><span style="font-size: 0.8em; font-weight: 500; opacity: 0.8;">Policy Authoring & Collaboration</span></h3>
+                        <h3>ポリシー作成・共同編集</h3>
                     </div>
-                    <p>リアルタイム共同編集、AI支援によるライティング支援、スマートテンプレート、完全なバージョン管理<br><span style="opacity: 0.8; font-size: 0.9em;">Real-time collaborative editing, AI-powered writing assistance, smart templates, complete version control</span></p>
-                    <div class="module-metric">→ 50-70%速い作成</div>
+                    <p>リアルタイムでの共同編集、AIによる作成支援、スマートテンプレート、完全なバージョン管理機能により、効率的なポリシー作成を実現します。</p>
+                    <div class="module-metric">→ 作成時間を50〜70%短縮</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">02</span>
-                        <h3>承認ワークフロー管理<br><span style="font-size: 0.8em; font-weight: 500; opacity: 0.8;">Approval Workflow Management</span></h3>
+                        <h3>承認ワークフロー管理</h3>
                     </div>
-                    <p>ビジュアルワークフローデザイナー、デジタル署名、自動ルーティング、リアルタイム進捗追跡<br><span style="opacity: 0.8; font-size: 0.9em;">Visual workflow designer, digital signatures, automated routing, real-time progress tracking</span></p>
-                    <div class="module-metric">→ 3-5日速い承認</div>
+                    <p>ビジュアルなワークフローデザイナー、デジタル署名、自動ルーティング、リアルタイムでの進捗管理により、承認プロセスを効率化します。</p>
+                    <div class="module-metric">→ 承認期間を3〜5日短縮</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">03</span>
-                        <h3>ポリシー配布と公開<br><span style="font-size: 0.8em; font-weight: 500; opacity: 0.8;">Policy Distribution & Publishing</span></h3>
+                        <h3>ポリシー配布・公開</h3>
                     </div>
-                    <p>マルチチャネル配信（Slack、Teams、WhatsApp）、一元化されたリポジトリ、緊急更新用のポリシーメモ<br><span style="opacity: 0.8; font-size: 0.9em;">Multi-channel delivery, centralized repository, policy memos for urgent updates</span></p>
-                    <div class="module-metric">→ 95%以上の通知到達率</div>
+                    <p>Slack、Teams、WhatsAppなどマルチチャネルでの配信、一元化されたリポジトリ、緊急更新のためのポリシーメモ機能を提供します。</p>
+                    <div class="module-metric">→ 95%以上の通知到達率を実現</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">04</span>
-                        <h3>ポリシー採用とエンゲージメント<br><span style="font-size: 0.8em; font-weight: 500; opacity: 0.8;">Policy Adoption & Engagement</span></h3>
+                        <h3>ポリシー浸透・エンゲージメント</h3>
                     </div>
-                    <p>インタラクティブな評価による検証済み理解度（受動的なチェックボックスではない）、ゲーミフィケーション、管理者エスカレーション<br><span style="opacity: 0.8; font-size: 0.9em;">Verified comprehension with interactive assessments (not passive checkboxes), gamification, manager escalation</span></p>
-                    <div class="module-metric">→ 95%以上の承認 | 90%以上の理解度</div>
+                    <p>インタラクティブな評価による確実な理解度確認（形式的なチェックボックスではありません）、ゲーミフィケーション、管理者へのエスカレーション機能を搭載しています。</p>
+                    <div class="module-metric">→ 95%以上の承認率と90%以上の理解度を達成</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">05</span>
-                        <h3>コンプライアンス副操縦士（AIアシスタント）<br><span style="font-size: 0.8em; font-weight: 500; opacity: 0.8;">Compliance Co-Pilot (AI Assistant)</span></h3>
+                        <h3>コンプライアンス・コパイロット（AIアシスタント）</h3>
                     </div>
-                    <p>AI駆動のセマンティック検索、ジャストインタイムガイダンス、違反追跡、行動分析<br><span style="opacity: 0.8; font-size: 0.9em;">AI-powered semantic search, just-in-time guidance, violation tracking, behavioral analytics</span></p>
-                    <div class="module-metric">→ 30秒未満の検索（20倍速）</div>
+                    <p>AIによるセマンティック検索、必要な時に必要なガイダンスを提供、違反の追跡、行動分析により、日常業務でのコンプライアンスを支援します。</p>
+                    <div class="module-metric">→ 検索時間を30秒未満に短縮（20倍高速化）</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">06</span>
-                        <h3>分析とレビュー管理<br><span style="font-size: 0.8em; font-weight: 500; opacity: 0.8;">Analytics & Review Management</span></h3>
+                        <h3>分析・レビュー管理</h3>
                     </div>
-                    <p>エグゼクティブダッシュボード、自動レビュートリガー、予測分析、コンプライアンスレポート<br><span style="opacity: 0.8; font-size: 0.9em;">Executive dashboards, automated review triggers, predictive analytics, compliance reporting</span></p>
-                    <div class="module-metric">→ 60-85%速い監査準備</div>
+                    <p>経営層向けダッシュボード、自動レビュートリガー、予測分析、コンプライアンスレポート機能により、データに基づいた意思決定を支援します。</p>
+                    <div class="module-metric">→ 監査準備時間を60〜85%短縮</div>
                 </div>
 
                 <div class="module">
                     <div class="module-header">
                         <span class="number-badge">07</span>
-                        <h3>管理と設定<br><span style="font-size: 0.8em; font-weight: 500; opacity: 0.8;">Administration & Configuration</span></h3>
+                        <h3>システム管理・設定</h3>
                     </div>
-                    <p>RBAC、SSO/MFA、HRIS統合（Workday、BambooHR）、シームレスなコラボレーションツール<br><span style="opacity: 0.8; font-size: 0.9em;">RBAC, SSO/MFA, HRIS integrations, seamless collaboration tools</span></p>
-                    <div class="module-metric">→ SOC 2 Type 2対応</div>
+                    <p>役割ベースのアクセス制御（RBAC）、シングルサインオン・多要素認証、人事システム連携（Workday、BambooHR）により、セキュアな運用を実現します。</p>
+                    <div class="module-metric">→ SOC 2 Type 2準拠</div>
                 </div>
             </div>
         </div>
@@ -1000,10 +1000,10 @@
     <section id="results" class="results">
         <div class="container">
             <div class="section-header">
-                <span class="label">成果 Results</span>
-                <h2>ポリシー指標の変革<br><span style="font-size: 0.6em; font-weight: 500; opacity: 0.7;">Transform Your Policy Metrics</span></h2>
+                <span class="label">導入効果</span>
+                <h2>ポリシー管理指標の改善</h2>
                 <p class="section-lead">
-                    完全なポリシーライフサイクル全体でPolicyHubが提供する測定可能な影響をご覧ください。<br><span style="opacity: 0.8;">See the measurable impact PolicyHub delivers across the complete policy lifecycle.</span>
+                    PolicyHubの導入により、ポリシーのライフサイクル全体で測定可能な効果が得られます。
                 </p>
             </div>
 
@@ -1011,48 +1011,48 @@
                 <table class="comparison-table">
                     <thead>
                         <tr>
-                            <th>指標 Metric</th>
-                            <th>現状 Current State</th>
-                            <th>PolicyHub導入後 With PolicyHub</th>
-                            <th>改善 Improvement</th>
+                            <th>指標</th>
+                            <th>現状</th>
+                            <th>PolicyHub導入後</th>
+                            <th>改善効果</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>ポリシー作成時間<br><span style="font-size: 0.85em; opacity: 0.7; font-weight: 400;">Policy Creation Time</span></strong></td>
-                            <td class="before">8-12週間</td>
-                            <td class="after">2-4週間</td>
-                            <td><span class="improvement">50-70%速い</span></td>
+                            <td><strong>ポリシー作成時間</strong></td>
+                            <td class="before">8〜12週間</td>
+                            <td class="after">2〜4週間</td>
+                            <td><span class="improvement">50〜70%短縮</span></td>
                         </tr>
                         <tr>
-                            <td><strong>承認率<br><span style="font-size: 0.85em; opacity: 0.7; font-weight: 400;">Acknowledgment Rate</span></strong></td>
-                            <td class="before">30-50%</td>
-                            <td class="after">95%+</td>
-                            <td><span class="improvement">2-3倍改善</span></td>
+                            <td><strong>従業員承認率</strong></td>
+                            <td class="before">30〜50%</td>
+                            <td class="after">95%以上</td>
+                            <td><span class="improvement">2〜3倍改善</span></td>
                         </tr>
                         <tr>
-                            <td><strong>理解度検証<br><span style="font-size: 0.85em; opacity: 0.7; font-weight: 400;">Comprehension Verification</span></strong></td>
-                            <td class="before">なし（受動的チェックボックス）</td>
+                            <td><strong>理解度検証</strong></td>
+                            <td class="before">なし（形式的な確認のみ）</td>
                             <td class="after">90%以上の合格率</td>
-                            <td><span class="improvement">新機能</span></td>
+                            <td><span class="improvement">新たな機能</span></td>
                         </tr>
                         <tr>
-                            <td><strong>ポリシー検索時間<br><span style="font-size: 0.85em; opacity: 0.7; font-weight: 400;">Policy Retrieval Time</span></strong></td>
+                            <td><strong>ポリシー検索時間</strong></td>
                             <td class="before">10分</td>
                             <td class="after">30秒未満</td>
-                            <td><span class="improvement">20倍速い</span></td>
+                            <td><span class="improvement">20倍高速化</span></td>
                         </tr>
                         <tr>
-                            <td><strong>監査準備<br><span style="font-size: 0.85em; opacity: 0.7; font-weight: 400;">Audit Preparation</span></strong></td>
-                            <td class="before">4-12週間</td>
-                            <td class="after">1-2週間</td>
-                            <td><span class="improvement">60-85%削減</span></td>
+                            <td><strong>監査準備期間</strong></td>
+                            <td class="before">4〜12週間</td>
+                            <td class="after">1〜2週間</td>
+                            <td><span class="improvement">60〜85%短縮</span></td>
                         </tr>
                         <tr>
-                            <td><strong>コンプライアンスの可視性<br><span style="font-size: 0.85em; opacity: 0.7; font-weight: 400;">Compliance Visibility</span></strong></td>
-                            <td class="before">事後対応</td>
-                            <td class="after">リアルタイム予防</td>
-                            <td><span class="improvement">継続的監視</span></td>
+                            <td><strong>コンプライアンス状況の可視化</strong></td>
+                            <td class="before">事後対応型</td>
+                            <td class="after">リアルタイムで予防的</td>
+                            <td><span class="improvement">継続的な監視を実現</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1063,8 +1063,8 @@
     <section class="trust">
         <div class="container">
             <div class="section-header">
-                <span class="label">エンタープライズセキュリティ & コンプライアンス</span>
-                <h2>規制産業向けに構築<br><span style="font-size: 0.6em; font-weight: 500; opacity: 0.7;">Built for Regulated Industries</span></h2>
+                <span class="label">エンタープライズセキュリティとコンプライアンス</span>
+                <h2>規制産業に対応した設計</h2>
             </div>
 
             <div class="trust-grid">
@@ -1079,9 +1079,9 @@
 
     <section class="cta">
         <div class="container">
-            <h2>ポリシー管理を変革する準備はできていますか？<br><span style="font-size: 0.65em; font-weight: 500;">Ready to Transform Your Policy Management?</span></h2>
-            <p>PolicyHubを導入し、95%以上の承認率と60-85%速い監査準備を実現する先進企業に加わりましょう。<br><span style="opacity: 0.9;">Join leading organizations using PolicyHub to achieve 95%+ acknowledgment rates and 60-85% faster audit preparation.</span></p>
-            <a href="mailto:info@neuralnexus.lk?subject=PolicyHub Demo Request" class="btn">デモをリクエスト Request a Demo</a>
+            <h2>ポリシー管理の変革を始めませんか</h2>
+            <p>PolicyHubを導入し、95%以上の承認率と60〜85%の監査準備時間短縮を実現している先進企業の仲間入りをしましょう。</p>
+            <a href="mailto:info@neuralnexus.lk?subject=PolicyHub デモのご依頼" class="btn">デモのご依頼</a>
         </div>
     </section>
 
@@ -1090,15 +1090,15 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <img src="Logo_Horizontal_Full_White.png" alt="NeuralNexus" class="footer-logo">
-                    <h3 class="footer-tagline">事後対応からリアルタイムへ<br><span style="font-size: 0.75em; opacity: 0.8;">From Reactive to Real-Time</span></h3>
-                    <p class="footer-description">コンプライアンスの確信。監査への備え。卓越した運用。<br><span style="opacity: 0.8;">Compliance confidence. Audit readiness. Operational excellence.</span></p>
+                    <h3 class="footer-tagline">事後対応からリアルタイム管理へ</h3>
+                    <p class="footer-description">確実なコンプライアンス。迅速な監査対応。優れた業務効率。</p>
                     <p class="footer-contact">
                         お問い合わせ・WhatsApp <a href="https://wa.me/94777880390" target="_blank">+94 77 788 0390</a>
                     </p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 NeuralNexus. インテリジェントシステムで未来を構築 Building the future with intelligent systems.</p>
+                <p>&copy; 2026 NeuralNexus. インテリジェントシステムで未来を構築します。</p>
             </div>
         </div>
     </footer>
